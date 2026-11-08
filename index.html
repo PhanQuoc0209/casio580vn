@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casio fx-580VN X - Máy Tính Khoa Học Thông Minh</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/math.min.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- MAIN CALCULATOR BODY -->
+    <main class="calc-chassis">
+
+      <!-- UPPER LCD SCREEN SECTION -->
+      <section class="screen-area" id="screenArea">
+        
+        <!-- Screen Top Bar -->
+        <div class="screen-top-bar">
+          <div class="screen-top-actions">
+            <button class="screen-icon-btn" id="btnNewDoc" title="Làm mới / Soạn mới">📄⁺</button>
+            <button class="screen-icon-btn" id="btnSaveDoc" title="Lưu lại kết quả">💾</button>
+          </div>
+
+          <!-- Feature Dropdown Selector -->
+          <div class="feature-dropdown-wrap">
+            <button class="feature-dropdown-btn" id="featureDropdownBtn">
+              <span id="currentFeatureLabel">Phân tích thừa số nguyên tố</span>
+              <span>▼</span>
+            </button>
+            <div class="feature-dropdown-menu" id="featureDropdownMenu">
+              <div class="dropdown-item" data-action="fact">🌿 Phân tích thừa số nguyên tố (FACT)</div>
+              <div class="dropdown-item" data-action="quad">🎯 Giải PT bậc 2 (ax² + bx + c = 0)</div>
+              <div class="dropdown-item" data-action="cubic">📐 Giải PT bậc 3 (ax³ + bx² + cx + d = 0)</div>
+              <div class="dropdown-item" data-action="quartic">🔮 Giải PT bậc 4 (ax⁴ + ... = 0)</div>
+              <div class="dropdown-item" data-action="simul2">📊 Giải hệ 2 phương trình (2 ẩn)</div>
+              <div class="dropdown-item" data-action="simul3">📊 Giải hệ 3 phương trình (3 ẩn)</div>
+              <div class="dropdown-item" data-action="ineq">⚖️ Giải bất phương trình bậc 2</div>
+              <div class="dropdown-item" data-action="table">📈 Bảng giá trị Table f(x)</div>
+              <div class="dropdown-item" data-action="deriv">🧮 Đạo hàm d/dx tại 1 điểm</div>
+              <div class="dropdown-item" data-action="integ">📐 Tích phân xác định ∫ f(x) dx</div>
+              <div class="dropdown-item" data-action="sum">∑ Tính tổng xích-ma</div>
+              <div class="dropdown-item" data-action="limit">🚀 Giới hạn Limit (x ➔ x₀)</div>
+              <div class="dropdown-item" data-action="gcd_lcm">🔢 Tìm ƯCLN (GCD) & BCNN (LCM)</div>
+              <div class="dropdown-item" data-action="cmplx">🔮 Tính toán số phức (Complex)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Expression Editor & Output Display -->
+        <div class="screen-editor-wrap">
+          <span class="screen-menu-dots" id="btnScreenMenu" title="Tuỳ chọn thêm">⋮</span>
+          
+          <div class="screen-input-line" id="screenInput">
+            <span class="screen-input-placeholder" id="placeholderText">Nhập biểu thức: x² - 3x + 1 = 0, log(100) - √2...</span>
+          </div>
+
+          <div class="screen-output-line" id="screenOutput"></div>
+        </div>
+
+      </section>
+
+      <!-- STATUS ROW (RAD, FRAC, NORM, HELP, PALETTE) -->
+      <section class="status-pill-row">
+        <div class="pill-group">
+          <button class="status-pill" id="pillAngle" title="Chuyển đổi RAD / DEG / GRA">RAD</button>
+          <button class="status-pill" id="pillFormat" title="Chuyển đổi Phân số (FRAC) / Thập phân (DEC)">FRAC</button>
+          <button class="status-pill" id="pillNorm" title="Định dạng NORM / FIX / SCI">NORM</button>
+        </div>
+
+        <div class="utility-group">
+          <button class="utility-icon-btn" id="btnHelp" title="Hướng dẫn sử dụng">❓</button>
+          <button class="utility-icon-btn" id="btnTheme" title="Đổi màu sắc giao diện">🎨</button>
+        </div>
+      </section>
+
+      <!-- KEYPAD SECTION -->
+      <section class="keypad-section">
+
+        <!-- ROW 1: System / Navigation -->
+        <div class="system-row">
+          <!-- SHIFT -->
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-dark btn-shift" data-key="SHIFT">SHIFT</button>
+          </div>
+
+          <!-- ALPHA -->
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-dark btn-alpha" data-key="ALPHA">ALPHA</button>
+          </div>
+
+          <!-- D-PAD Center Disc -->
+          <div class="dpad-disc">
+            <button class="dpad-arrow up" data-key="UP" title="Lên">▲</button>
+            <button class="dpad-arrow down" data-key="DOWN" title="Xuống">▼</button>
+            <button class="dpad-arrow left" data-key="LEFT" title="Trái">◄</button>
+            <button class="dpad-arrow right" data-key="RIGHT" title="Phải">►</button>
+            <div class="dpad-center-indent"></div>
+          </div>
+
+          <!-- MENU -->
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-dark" data-key="MENU">MENU</button>
+          </div>
+
+          <!-- SETTINGS -->
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-dark" data-key="SETTINGS" title="Cài đặt">🎚</button>
+          </div>
+        </div>
+
+        <!-- ROW 2: OPTN, CALC, ∫, x -->
+        <div class="system-row" style="margin-top: 2px;">
+          <!-- OPTN -->
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-dark" data-key="OPTN">OPTN</button>
+          </div>
+
+          <!-- CALC -->
+          <div class="key-box">
+            <div class="key-annotation">
+              <span class="annot-shift">SOLVE</span>
+              <span class="annot-alpha">=</span>
+            </div>
+            <button class="key-button btn-dark" data-key="CALC">CALC</button>
+          </div>
+
+          <!-- Space for D-pad bottom -->
+          <div style="visibility: hidden;"></div>
+
+          <!-- INTEGRAL -->
+          <div class="key-box">
+            <div class="key-annotation">
+              <span class="annot-shift">d/dx ■</span>
+              <span class="annot-alpha">:</span>
+            </div>
+            <button class="key-button btn-dark" data-key="INTEG">∫_■^■</button>
+          </div>
+
+          <!-- VARIABLE x -->
+          <div class="key-box">
+            <div class="key-annotation">
+              <span class="annot-shift">∑ ■</span>
+              <span class="annot-alpha">∏ ■</span>
+            </div>
+            <button class="key-button btn-dark" data-key="VAR_X" style="font-style: italic;">x</button>
+          </div>
+        </div>
+
+        <!-- ROW 3: Scientific Grid 1 (Fraction, Sqrt, x^2, x^y, log, ln) -->
+        <div class="sci-row-grid">
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">■ ■/■</span><span class="annot-alpha">÷R</span></div>
+            <button class="key-button btn-dark" data-key="FRAC">■/■</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">³√■</span><span class="annot-alpha">(■)</span></div>
+            <button class="key-button btn-dark" data-key="SQRT">√■</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">x³</span><span class="annot-alpha">mod</span></div>
+            <button class="key-button btn-dark" data-key="X2">x²</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">■√□</span><span class="annot-alpha">cot</span></div>
+            <button class="key-button btn-dark" data-key="X_POW">x^■</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">10^■</span><span class="annot-alpha">cot⁻¹</span></div>
+            <button class="key-button btn-dark" data-key="LOG_BASE">log_■□</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">e^■</span></div>
+            <button class="key-button btn-dark" data-key="LN">ln</button>
+          </div>
+        </div>
+
+        <!-- ROW 4: Scientific Grid 2 ((-), °'", x^-1, sin, cos, tan) -->
+        <div class="sci-row-grid">
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">log</span><span class="annot-alpha">A</span></div>
+            <button class="key-button btn-dark" data-key="NEG">(-)</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">FACT</span><span class="annot-alpha">B</span></div>
+            <button class="key-button btn-dark" data-key="DEG">° ' "</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">x!</span><span class="annot-alpha">C</span></div>
+            <button class="key-button btn-dark" data-key="INV">x⁻¹</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">sin⁻¹</span><span class="annot-alpha">D</span></div>
+            <button class="key-button btn-dark" data-key="SIN">sin</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">cos⁻¹</span><span class="annot-alpha">T</span></div>
+            <button class="key-button btn-dark" data-key="COS">cos</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">tan⁻¹</span><span class="annot-alpha">F</span></div>
+            <button class="key-button btn-dark" data-key="TAN">tan</button>
+          </div>
+        </div>
+
+        <!-- ROW 5: Scientific Grid 3 (STO, ENG, (, ), S<=>D, M+) -->
+        <div class="sci-row-grid">
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">RECALL</span></div>
+            <button class="key-button btn-dark" data-key="STO">STO</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">∠</span><span class="annot-alpha">i</span></div>
+            <button class="key-button btn-dark" data-key="ENG">ENG</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">Abs</span><span class="annot-alpha">x</span></div>
+            <button class="key-button btn-dark" data-key="(">(</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">;</span><span class="annot-alpha">y</span></div>
+            <button class="key-button btn-dark" data-key=")">)</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">a b/c⇔d/c</span><span class="annot-alpha">Z</span></div>
+            <button class="key-button btn-dark" data-key="SD">S⇔D</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">M-</span><span class="annot-alpha">M</span></div>
+            <button class="key-button btn-dark" data-key="M_PLUS">M+</button>
+          </div>
+        </div>
+
+        <!-- NUMERIC & ACTIONS BLOCK (5 COLUMNS) -->
+        <div class="num-block-grid">
+          <!-- Row 6: 7, 8, 9, DEL (BLUE), AC (BLUE) -->
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">CONST</span></div>
+            <button class="key-button btn-white" data-key="7">7</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">CONV</span></div>
+            <button class="key-button btn-white" data-key="8">8</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">Limit</span><span class="annot-alpha">∞</span></div>
+            <button class="key-button btn-white" data-key="9">9</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">INS</span><span class="annot-alpha">UNDO</span></div>
+            <button class="key-button btn-blue-action" data-key="DEL">DEL</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-blue-action" data-key="AC">AC</button>
+          </div>
+
+          <!-- Row 7: 4, 5, 6, ×, ÷ -->
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">MATRIX</span><span class="annot-alpha">[⊞]</span></div>
+            <button class="key-button btn-white" data-key="4">4</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-white" data-key="5">5</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-white" data-key="6">6</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">nPr</span><span class="annot-alpha">GCD</span></div>
+            <button class="key-button btn-white" data-key="MUL">×</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">nCr</span><span class="annot-alpha">LCM</span></div>
+            <button class="key-button btn-white" data-key="DIV">÷</button>
+          </div>
+
+          <!-- Row 8: 1, 2, 3, +, - -->
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-white" data-key="1">1</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">CMPLX</span></div>
+            <button class="key-button btn-white" data-key="2">2</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-white" data-key="3">3</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">Pol</span><span class="annot-alpha">Ceil</span></div>
+            <button class="key-button btn-white" data-key="PLUS">+</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">Rec</span><span class="annot-alpha">Intg</span></div>
+            <button class="key-button btn-white" data-key="MINUS">-</button>
+          </div>
+
+          <!-- Row 9: 0, ,, ×10^x, Ans, = -->
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-white" data-key="0">0</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">Ran#</span><span class="annot-alpha">RanInt</span></div>
+            <button class="key-button btn-white" data-key=",">,</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">π</span><span class="annot-alpha">e</span></div>
+            <button class="key-button btn-white" data-key="EXP" style="font-size:12px;">×10^x</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"><span class="annot-shift">%</span><span class="annot-alpha">PreAns</span></div>
+            <button class="key-button btn-white" data-key="ANS" style="font-size:12px;">Ans</button>
+          </div>
+          <div class="key-box">
+            <div class="key-annotation"></div>
+            <button class="key-button btn-white" data-key="EQ">=</button>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- SIDEBAR / HELPER INFORMATION -->
+    <aside class="side-helper-panel">
+      <div style="font-size: 16px; font-weight: 800; color: #38bdf8;">
+        Casio fx-580VN X Pro Edition
+      </div>
+      <div class="helper-card">
+        <b>⭐ Đặc điểm mới theo đúng ảnh của bạn:</b>
+        <ul style="padding-left: 18px; margin-top: 6px;">
+          <li><b>Hai nút DEL & AC màu Xanh Dương</b> chuẩn nhận diện.</li>
+          <li><b>Menu xổ xuống (Dropdown)</b> chọn nhanh các chức năng đặc biệt: Phân tích thừa số, Giải PT, BPT, Hệ PT, Đạo hàm, Tích phân...</li>
+          <li><b>Tự động giải phương trình:</b> Nhập trực tiếp biểu thức có dấu bằng như <code>x² - 3x + 1 = 0</code> rồi bấm <code>=</code> để nhận kết quả cực trị & nghiệm ngay!</li>
+          <li><b>Badges trạng thái:</b> Bấm trực tiếp vào <code>RAD</code>, <code>FRAC</code>, <code>NORM</code> để đổi chế độ tức thì.</li>
+          <li>Nút <b>📄⁺</b> để làm mới biểu thức, <b>💾</b> để lưu lại kết quả.</li>
+        </ul>
+      </div>
+
+      <div class="helper-card" id="historyBox">
+        <b>📜 Các phép tính gần đây:</b>
+        <div id="historyEntries" style="margin-top: 8px; max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;">
+          <div style="color: #64748b; font-size: 12px;">Chưa có lịch sử tính toán</div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- INTERACTIVE TOOL MODAL -->
+  <div class="modal-overlay" id="toolModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span class="modal-title" id="modalTitle">Chức năng</span>
+        <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="calculator.js"></script>
+</body>
+</html>
