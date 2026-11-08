@@ -207,7 +207,7 @@ body {
   margin-top: 4px;
   display: none;
   flex-direction: column;
-  max-height: 260px;
+  max-height: 280px;
   overflow-y: auto;
   z-index: 100;
 }
@@ -283,45 +283,19 @@ body {
 /* Result Section */
 .screen-output-line {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   text-align: right;
-  line-height: 1.2;
+  line-height: 1.25;
   word-break: break-all;
   margin-top: 6px;
   min-height: 28px;
   padding-bottom: 2px;
   color: var(--screen-ink);
+  white-space: pre-wrap;
 }
 
-.solution-steps {
-  font-size: 12px;
-  font-family: monospace;
-  line-height: 1.35;
-  background: rgba(0, 0, 0, 0.04);
-  border-radius: 6px;
-  padding: 6px;
-  margin-top: 4px;
-}
-
-/* Blinking Cursor */
-.calc-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 18px;
-  background-color: var(--screen-ink);
-  vertical-align: text-bottom;
-  animation: blinkCursor 0.85s infinite;
-}
-
-@keyframes blinkCursor {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-/* ==========================================================================
-   STATUS ROW (Pill Badges & Round Utility Icons)
-   ========================================================================== */
+/* Status Row */
 .status-pill-row {
   display: flex;
   align-items: center;
@@ -354,11 +328,6 @@ body {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.status-pill.active {
-  background: #38bdf8;
-  color: #0f172a;
-}
-
 .utility-group {
   display: flex;
   align-items: center;
@@ -385,9 +354,7 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* ==========================================================================
-   KEYPAD BUTTON GRID
-   ========================================================================== */
+/* Keypad Section */
 .keypad-section {
   display: flex;
   flex-direction: column;
@@ -395,7 +362,6 @@ body {
   margin-top: 2px;
 }
 
-/* Row 1: System Row (SHIFT, ALPHA, D-PAD, MENU, SETTINGS) */
 .system-row {
   display: grid;
   grid-template-columns: 56px 56px 1fr 56px 56px;
@@ -404,7 +370,6 @@ body {
   align-items: center;
 }
 
-/* Oval D-Pad Disc */
 .dpad-disc {
   grid-column: 3 / 4;
   grid-row: 1 / 3;
@@ -447,20 +412,13 @@ body {
   transition: transform 0.1s ease, color 0.1s ease;
 }
 
-.dpad-arrow:hover {
-  color: #f1f5f9;
-}
-
-.dpad-arrow:active {
-  transform: scale(0.9);
-}
-
+.dpad-arrow:hover { color: #f1f5f9; }
+.dpad-arrow:active { transform: scale(0.9); }
 .dpad-arrow.up { top: 2px; left: 50%; transform: translateX(-50%); }
 .dpad-arrow.down { bottom: 2px; left: 50%; transform: translateX(-50%); }
 .dpad-arrow.left { left: 4px; top: 50%; transform: translateY(-50%); }
 .dpad-arrow.right { right: 4px; top: 50%; transform: translateY(-50%); }
 
-/* Key Cell Structure */
 .key-box {
   display: flex;
   flex-direction: column;
@@ -481,18 +439,9 @@ body {
   letter-spacing: -0.2px;
 }
 
-.annot-shift {
-  color: var(--label-shift);
-  text-align: left;
-}
+.annot-shift { color: var(--label-shift); text-align: left; }
+.annot-alpha { color: var(--label-alpha); text-align: right; margin-left: auto; }
 
-.annot-alpha {
-  color: var(--label-alpha);
-  text-align: right;
-  margin-left: auto;
-}
-
-/* Button Base */
 .key-button {
   width: 100%;
   height: 27px;
@@ -515,7 +464,6 @@ body {
   filter: brightness(0.92);
 }
 
-/* Dark Function Key */
 .btn-dark {
   background: linear-gradient(180deg, var(--key-dark-top) 0%, var(--key-dark-bot) 100%);
   color: var(--key-dark-text);
@@ -526,47 +474,27 @@ body {
   font-size: 11.5px;
 }
 
-.btn-dark:active {
-  box-shadow: 0 1px 0 var(--key-dark-shadow);
-}
-
-/* SHIFT button */
-.btn-shift {
-  color: var(--label-shift);
-  font-weight: 900;
-}
-
+.btn-shift { color: var(--label-shift); font-weight: 900; }
 .btn-shift.active {
   background: var(--label-shift);
   color: #000;
   box-shadow: 0 1px 0 #78350f, 0 0 10px rgba(245, 158, 11, 0.5);
 }
 
-/* ALPHA button */
-.btn-alpha {
-  color: var(--label-alpha);
-  font-weight: 900;
-}
-
+.btn-alpha { color: var(--label-alpha); font-weight: 900; }
 .btn-alpha.active {
   background: var(--label-alpha);
   color: #fff;
   box-shadow: 0 1px 0 #881337, 0 0 10px rgba(244, 63, 94, 0.5);
 }
 
-/* Scientific Grid: 6 Columns */
 .sci-row-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 4px 5px;
 }
+.sci-row-grid .key-button { height: 26px; font-size: 11px; }
 
-.sci-row-grid .key-button {
-  height: 26px;
-  font-size: 11px;
-}
-
-/* Numeric & Operations Grid: 5 Columns */
 .num-block-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -574,7 +502,6 @@ body {
   margin-top: 4px;
 }
 
-/* White Key for Numbers & Basic Ops */
 .btn-white {
   background: linear-gradient(180deg, var(--key-white-top) 0%, var(--key-white-bot) 100%);
   color: var(--key-white-text);
@@ -587,11 +514,6 @@ body {
   height: 33px;
 }
 
-.btn-white:active {
-  box-shadow: 0 1px 0 var(--key-white-shadow);
-}
-
-/* DISTINCT ROYAL BLUE DEL & AC KEYS (as shown in user image) */
 .btn-blue-action {
   background: linear-gradient(180deg, var(--key-blue-top) 0%, var(--key-blue-bot) 100%);
   color: var(--key-blue-text);
@@ -604,18 +526,14 @@ body {
   height: 33px;
 }
 
-.btn-blue-action:active {
-  box-shadow: 0 1px 0 var(--key-blue-shadow);
-}
-
 /* ==========================================================================
-   MODAL POPUPS (Special Solvers & Tools)
+   MODAL POPUPS & MENU 12 GRID
    ========================================================================== */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -628,20 +546,21 @@ body {
 }
 
 .modal-card {
-  background: #1e2530;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #181f2a;
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 14px;
   width: 100%;
-  max-width: 440px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  max-width: 520px;
+  max-height: 85vh;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: modalFadeIn 0.2s ease;
+  animation: modalFadeIn 0.18s ease;
 }
 
 @keyframes modalFadeIn {
-  from { opacity: 0; transform: scale(0.95); }
+  from { opacity: 0; transform: scale(0.96); }
   to { opacity: 1; transform: scale(1); }
 }
 
@@ -649,14 +568,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
+  padding: 12px 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .modal-title {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   color: #38bdf8;
   display: flex;
   align-items: center;
@@ -667,16 +586,13 @@ body {
   background: transparent;
   border: none;
   color: #94a3b8;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
   padding: 2px 6px;
   border-radius: 4px;
 }
 
-.modal-close-btn:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-}
+.modal-close-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
 
 .modal-body {
   padding: 16px 18px;
@@ -684,10 +600,11 @@ body {
   flex-direction: column;
   gap: 12px;
   font-size: 13.5px;
+  overflow-y: auto;
 }
 
 .modal-input-field {
-  background: #0f141a;
+  background: #0d1217;
   border: 1px solid #334155;
   border-radius: 6px;
   color: #f8fafc;
@@ -697,28 +614,126 @@ body {
   outline: none;
   width: 100%;
 }
-
-.modal-input-field:focus {
-  border-color: #38bdf8;
-}
+.modal-input-field:focus { border-color: #38bdf8; }
 
 .modal-action-btn {
   background: #38bdf8;
   color: #0f172a;
   border: none;
   border-radius: 6px;
-  padding: 10px;
+  padding: 9px;
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
   transition: all 0.15s ease;
 }
+.modal-action-btn:hover { background: #7dd3fc; }
 
-.modal-action-btn:hover {
-  background: #7dd3fc;
+/* 12-ITEM MENU GRID (Casio fx-580VN X Menu) */
+.menu-grid-12 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }
 
-/* SIDE HELPER PANEL */
+.menu-card-tile {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.menu-card-tile:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+.menu-card-tile:active {
+  transform: scale(0.96);
+}
+
+.menu-tile-badge {
+  background: #0f172a;
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+  font-size: 12px;
+  font-weight: 900;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-tile-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.menu-tile-desc {
+  font-size: 10.5px;
+  color: #94a3b8;
+  line-height: 1.25;
+}
+
+/* Learning Command Cheatsheet in Modal */
+.cmd-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cmd-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cmd-code {
+  font-family: monospace;
+  font-size: 13px;
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.cmd-meaning {
+  font-size: 11.5px;
+  color: #cbd5e1;
+}
+
+.cmd-try-btn {
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  color: #38bdf8;
+  border-radius: 5px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cmd-try-btn:hover {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+/* Side Helper Panel */
 .side-helper-panel {
   flex: 1;
   max-width: 440px;
