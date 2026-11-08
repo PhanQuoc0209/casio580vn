@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Casio fx-580VN X - Máy Tính Khoa Học Thông Minh</title>
+  <title>Casio fx-580VN X-PK (Pink Edition) - 521 Tính Năng Chuẩn Casio</title>
   <link rel="stylesheet" href="styles.css">
   <script src="vendor/math.min.js"></script>
 </head>
@@ -11,8 +11,19 @@
 
   <div class="app-container">
 
-    <!-- MAIN CALCULATOR BODY -->
+    <!-- MAIN CASIO fx-580VN X-PK BODY -->
     <main class="calc-chassis">
+
+      <!-- Header Branding for Pink Edition -->
+      <div class="calc-brand-header">
+        <div class="brand-text-left">
+          <span class="brand-casio">CASIO</span>
+          <span class="brand-model">fx-580VN X <span class="pk-tag">PK PINK</span></span>
+        </div>
+        <div>
+          <span class="classwiz-tag">CLASSWIZ</span>
+        </div>
+      </div>
 
       <!-- UPPER LCD SCREEN SECTION -->
       <section class="screen-area" id="screenArea">
@@ -32,19 +43,28 @@
             </button>
             <div class="feature-dropdown-menu" id="featureDropdownMenu">
               <div class="dropdown-item" data-action="fact">🌿 Phân tích thừa số nguyên tố (FACT)</div>
-              <div class="dropdown-item" data-action="quad">🎯 Giải PT bậc 2 (ax² + bx + c = 0)</div>
+              <div class="dropdown-item" data-action="prime_check">🔍 Kiểm tra số nguyên tố (Prime Check)</div>
+              <div class="dropdown-item" data-action="div_r">➗ Phép chia có dư (÷R - Thương & Dư)</div>
+              <div class="dropdown-item" data-action="verify">✔️ Kiểm tra Đúng/Sai (Verify)</div>
+              <div class="dropdown-item" data-action="quad">🎯 Giải PT bậc 2 (ax² + bx + c = 0) & Cực trị</div>
               <div class="dropdown-item" data-action="cubic">📐 Giải PT bậc 3 (ax³ + bx² + cx + d = 0)</div>
               <div class="dropdown-item" data-action="quartic">🔮 Giải PT bậc 4 (ax⁴ + ... = 0)</div>
               <div class="dropdown-item" data-action="simul2">📊 Giải hệ 2 phương trình (2 ẩn)</div>
               <div class="dropdown-item" data-action="simul3">📊 Giải hệ 3 phương trình (3 ẩn)</div>
-              <div class="dropdown-item" data-action="ineq">⚖️ Giải bất phương trình bậc 2</div>
-              <div class="dropdown-item" data-action="table">📈 Bảng giá trị Table f(x)</div>
+              <div class="dropdown-item" data-action="simul4">📊 Giải hệ 4 phương trình (4 ẩn)</div>
+              <div class="dropdown-item" data-action="ineq">⚖️ Giải bất phương trình bậc 2, 3, 4</div>
+              <div class="dropdown-item" data-action="table">📈 Bảng giá trị Table f(x), g(x)</div>
               <div class="dropdown-item" data-action="deriv">🧮 Đạo hàm d/dx tại 1 điểm</div>
               <div class="dropdown-item" data-action="integ">📐 Tích phân xác định ∫ f(x) dx</div>
-              <div class="dropdown-item" data-action="sum">∑ Tính tổng xích-ma</div>
+              <div class="dropdown-item" data-action="sum">∑ Tính tổng xích-ma & ∏ Tích dãy số</div>
               <div class="dropdown-item" data-action="limit">🚀 Giới hạn Limit (x ➔ x₀)</div>
               <div class="dropdown-item" data-action="gcd_lcm">🔢 Tìm ƯCLN (GCD) & BCNN (LCM)</div>
               <div class="dropdown-item" data-action="cmplx">🔮 Tính toán số phức (Complex)</div>
+              <div class="dropdown-item" data-action="matrix">📦 Ma trận 4x4 (Matrix & Det)</div>
+              <div class="dropdown-item" data-action="vector">↗️ Véc-tơ 3D (Vector)</div>
+              <div class="dropdown-item" data-action="stat">📊 Thống kê 1 biến & Hồi quy</div>
+              <div class="dropdown-item" data-action="distrib">🎲 Phân phối xác suất (Distribution)</div>
+              <div class="dropdown-item" data-action="ratio">⚖️ Tỉ lệ thức (Ratio a:b = c:d)</div>
             </div>
           </div>
         </div>
@@ -65,13 +85,13 @@
       <!-- STATUS ROW (RAD, FRAC, NORM, HELP, PALETTE) -->
       <section class="status-pill-row">
         <div class="pill-group">
-          <button class="status-pill" id="pillAngle" title="Chuyển đổi RAD / DEG / GRA">RAD</button>
-          <button class="status-pill" id="pillFormat" title="Chuyển đổi Phân số (FRAC) / Thập phân (DEC)">FRAC</button>
+          <button class="status-pill active" id="pillAngle" title="Chuyển đổi RAD / DEG / GRA">RAD</button>
+          <button class="status-pill active" id="pillIOMode" title="Chế độ Nhập/Xuất: MathI/MathO, MathI/DecimalO, LineI/LineO, LineI/DecimalO">MathI/MathO</button>
           <button class="status-pill" id="pillNorm" title="Định dạng NORM / FIX / SCI">NORM</button>
         </div>
 
         <div class="utility-group">
-          <button class="utility-icon-btn" id="btnHelp" title="Hướng dẫn sử dụng">❓</button>
+          <button class="utility-icon-btn" id="btnHelp" title="Bảng học lệnh toán học">❓</button>
           <button class="utility-icon-btn" id="btnTheme" title="Đổi màu sắc giao diện">🎨</button>
         </div>
       </section>
@@ -93,7 +113,7 @@
             <button class="key-button btn-dark btn-alpha" data-key="ALPHA">ALPHA</button>
           </div>
 
-          <!-- D-PAD Center Disc -->
+          <!-- Metallic Rose-Gold D-PAD Center Disc -->
           <div class="dpad-disc">
             <button class="dpad-arrow up" data-key="UP" title="Lên">▲</button>
             <button class="dpad-arrow down" data-key="DOWN" title="Xuống">▼</button>
@@ -240,7 +260,7 @@
 
         <!-- NUMERIC & ACTIONS BLOCK (5 COLUMNS) -->
         <div class="num-block-grid">
-          <!-- Row 6: 7, 8, 9, DEL (BLUE), AC (BLUE) -->
+          <!-- Row 6: 7, 8, 9, DEL (Vivid Rose/Pink), AC (Vivid Rose/Pink) -->
           <div class="key-box">
             <div class="key-annotation"><span class="annot-shift">CONST</span></div>
             <button class="key-button btn-white" data-key="7">7</button>
@@ -334,24 +354,32 @@
 
     <!-- SIDEBAR / HELPER INFORMATION -->
     <aside class="side-helper-panel">
-      <div style="font-size: 16px; font-weight: 800; color: #38bdf8;">
-        Casio fx-580VN X Pro Edition
+      <div style="font-size: 16px; font-weight: 800; color: #f472b6; display: flex; align-items: center; justify-content: space-between;">
+        <span>🌸 Casio fx-580VN X-PK</span>
+        <span style="font-size: 11px; background: #be123c; color: #fff; padding: 2px 7px; border-radius: 4px;">521 Tính Năng</span>
       </div>
       <div class="helper-card">
-        <b>⭐ Đặc điểm mới theo đúng ảnh của bạn:</b>
-        <ul style="padding-left: 18px; margin-top: 6px;">
-          <li><b>Hai nút DEL & AC màu Xanh Dương</b> chuẩn nhận diện.</li>
-          <li><b>Menu xổ xuống (Dropdown)</b> chọn nhanh các chức năng đặc biệt: Phân tích thừa số, Giải PT, BPT, Hệ PT, Đạo hàm, Tích phân...</li>
-          <li><b>Tự động giải phương trình:</b> Nhập trực tiếp biểu thức có dấu bằng như <code>x² - 3x + 1 = 0</code> rồi bấm <code>=</code> để nhận kết quả cực trị & nghiệm ngay!</li>
-          <li><b>Badges trạng thái:</b> Bấm trực tiếp vào <code>RAD</code>, <code>FRAC</code>, <code>NORM</code> để đổi chế độ tức thì.</li>
-          <li>Nút <b>📄⁺</b> để làm mới biểu thức, <b>💾</b> để lưu lại kết quả.</li>
+        <b>🌸 Phiên bản màu Hồng Sweet Pastel (FX-580VNX-PK):</b>
+        <ul style="padding-left: 18px; margin-top: 6px; color: #fce7f3;">
+          <li><b>Thiết kế chuẩn hãng Casio Nhật Bản & Bitex:</b> Vỏ máy hồng thời trang, dĩa D-pad ánh kim rose-gold.</li>
+          <li><b>Tốc độ xử lý siêu nhanh:</b> Nhân chip xử lý ClassWiz cho tốc độ tính toán nhanh gấp 4 lần thế hệ cũ.</li>
+          <li><b>Đầy đủ 521 tính năng:</b>
+            <ul style="padding-left: 14px; margin-top: 4px;">
+              <li>Kiểm tra số nguyên tố (Prime Check), Phân tích thừa số (FACT).</li>
+              <li>Phép chia có dư (÷R), Kiểm tra Đúng/Sai (Verify).</li>
+              <li>Giải PT bậc 2 (tìm Cực trị Parabol), bậc 3, bậc 4.</li>
+              <li>Giải hệ phương trình bậc nhất 2 ẩn, 3 ẩn và <b>4 ẩn</b>.</li>
+              <li>Ma trận 4x4, Véc-tơ 3D, Thống kê, Phân phối xác suất.</li>
+            </ul>
+          </li>
+          <li>Bấm <b>MENU</b> để mở lưới 12 chế độ hoặc chuyển qua tab <b>"💡 Học lệnh"</b> để xem toàn bộ cú pháp toán học.</li>
         </ul>
       </div>
 
       <div class="helper-card" id="historyBox">
         <b>📜 Các phép tính gần đây:</b>
         <div id="historyEntries" style="margin-top: 8px; max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;">
-          <div style="color: #64748b; font-size: 12px;">Chưa có lịch sử tính toán</div>
+          <div style="color: #cbd5e1; font-size: 12px;">Chưa có lịch sử tính toán</div>
         </div>
       </div>
     </aside>
