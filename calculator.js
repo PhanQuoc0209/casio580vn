@@ -1329,11 +1329,12 @@
       this.isShift = false;
       this.isAlpha = false;
 
-      this.angleUnit = 'RAD'; // Default RAD
+      this.angleUnit = 'DEG'; // Default DEG on Vietnamese Casio fx-580VN X
       this.ioMode = 'MathI/MathO'; // Default MathI/MathO per Requirement 1
       this.normMode = 'NORM'; // Default NORM
 
       this.currentTheme = 'pink'; // Casio fx-580VN X-PK Official Default
+      this.hasInteracted = false; // Show CASIO® splash screen on start until keypress
 
       this.history = [];
 
@@ -1353,9 +1354,21 @@
     initDom() {
       this.el = {
         screenArea: document.getElementById('screenArea'),
+        screenDisplayBody: document.getElementById('screenDisplayBody'),
+        screenIdleSplash: document.getElementById('screenIdleSplash'),
         screenInput: document.getElementById('screenInput'),
         screenOutput: document.getElementById('screenOutput'),
         placeholderText: document.getElementById('placeholderText'),
+
+        indShift: document.getElementById('indShift'),
+        indAlpha: document.getElementById('indAlpha'),
+        indMem: document.getElementById('indMem'),
+        indSto: document.getElementById('indSto'),
+        indRoot: document.getElementById('indRoot'),
+        indAngle: document.getElementById('indAngle'),
+        indMath: document.getElementById('indMath'),
+        indScrollUp: document.getElementById('indScrollUp'),
+        indScrollDown: document.getElementById('indScrollDown'),
 
         pillAngle: document.getElementById('pillAngle'),
         pillIOMode: document.getElementById('pillIOMode'),
@@ -1368,6 +1381,7 @@
         btnSaveDoc: document.getElementById('btnSaveDoc'),
         btnScreenMenu: document.getElementById('btnScreenMenu'),
         btnHelp: document.getElementById('btnHelp'),
+        btnSettings: document.getElementById('btnSettings'),
         btnTheme: document.getElementById('btnTheme'),
 
         toolModal: document.getElementById('toolModal'),
@@ -1389,13 +1403,46 @@
       });
 
       // Status Pill clicks
-      this.el.pillAngle.addEventListener('click', () => {
-        const units = ['RAD', 'DEG', 'GRA'];
-        const idx = (units.indexOf(this.angleUnit) + 1) % units.length;
-        this.angleUnit = units[idx];
-        this.el.pillAngle.innerText = this.angleUnit;
-        this.sound.playClick();
-      });
+      if (this.el.pillAngle) {
+        this.el.pillAngle.addEventListener('click', () => {
+          const units = ['DEG', 'RAD', 'GRA'];
+          const idx = (units.indexOf(this.angleUnit) + 1) % units.length;
+          this.angleUnit = units[idx];
+          this.el.pillAngle.innerText = this.angleUnit;
+          this.sound.playClick();
+          this.updateDisplay();
+        });
+      }
+
+      // LCD Status Indicators click to toggle directly on screen
+      if (this.el.indAngle) {
+        this.el.indAngle.addEventListener('click', () => {
+          const units = ['DEG', 'RAD', 'GRA'];
+          const idx = (units.indexOf(this.angleUnit) + 1) % units.length;
+          this.angleUnit = units[idx];
+          if (this.el.pillAngle) this.el.pillAngle.innerText = this.angleUnit;
+          this.sound.playClick();
+          this.updateDisplay();
+        });
+      }
+
+      if (this.el.indMath) {
+        this.el.indMath.addEventListener('click', () => {
+          this.ioMode = this.isMathIMode() ? 'LineI/LineO' : 'MathI/MathO';
+          if (this.el.pillIOMode) this.el.pillIOMode.innerText = this.ioMode;
+          this.sound.playClick();
+          this.updateDisplay();
+        });
+      }
+
+      if (this.el.screenDisplayBody) {
+        this.el.screenDisplayBody.addEventListener('click', () => {
+          if (!this.hasInteracted) {
+            this.hasInteracted = true;
+            this.updateDisplay();
+          }
+        });
+      }
 
       if (this.el.pillIOMode) {
         this.el.pillIOMode.addEventListener('click', () => {
@@ -1408,13 +1455,19 @@
         });
       }
 
-      this.el.pillNorm.addEventListener('click', () => {
-        const modes = ['NORM', 'FIX', 'SCI'];
-        const idx = (modes.indexOf(this.normMode) + 1) % modes.length;
-        this.normMode = modes[idx];
-        this.el.pillNorm.innerText = this.normMode;
-        this.sound.playClick();
-      });
+      if (this.el.pillNorm) {
+        this.el.pillNorm.addEventListener('click', () => {
+          const modes = ['NORM', 'FIX', 'SCI'];
+          const idx = (modes.indexOf(this.normMode) + 1) % modes.length;
+          this.normMode = modes[idx];
+          this.el.pillNorm.innerText = this.normMode;
+          this.sound.playClick();
+        });
+      }
+
+      if (this.el.btnSettings) {
+        this.el.btnSettings.addEventListener('click', () => this.openFeatureModal('settings'));
+      }
 
       // Screen click-to-focus on empty boxes and slots
       this.el.screenInput.addEventListener('click', (e) => {
@@ -1492,6 +1545,21 @@
         e.stopPropagation();
       }
       this.sound.playClick();
+
+      if (keyId === 'ON') {
+        this.ast.clear();
+        this.rawExpr = '';
+        this.lastResult = null;
+        this.lastResultHTML = '';
+        this.lastResultFrac = null;
+        this.lastResultDec = null;
+        this.hasInteracted = false;
+        this.sound.playBeep();
+        this.updateDisplay();
+        return;
+      }
+
+      this.hasInteracted = true;
 
       if (keyId === 'SHIFT') {
         this.isShift = !this.isShift;
@@ -1928,6 +1996,8 @@
       const alphaBtn = document.querySelector('.btn-alpha');
       if (shiftBtn) shiftBtn.classList.toggle('active', this.isShift);
       if (alphaBtn) alphaBtn.classList.toggle('active', this.isAlpha);
+      if (this.el.indShift) this.el.indShift.classList.toggle('active', this.isShift);
+      if (this.el.indAlpha) this.el.indAlpha.classList.toggle('active', this.isAlpha);
     }
 
     // --- EVALUATION WITH NATURAL TEXTBOOK DISPLAY (MathIO / MathO) ---
@@ -2240,12 +2310,41 @@
     }
 
     updateDisplay() {
+      // Toggle idle splash screen vs expression input
+      const isEmpty = (this.isMathIMode() && this.ast.isEmpty() && !this.rawExpr) || (!this.isMathIMode() && !this.rawExpr);
+      if (this.el.screenIdleSplash && this.el.screenInput) {
+        if (!this.hasInteracted && isEmpty && !this.lastResult) {
+          this.el.screenIdleSplash.style.display = 'flex';
+          this.el.screenInput.style.display = 'none';
+        } else {
+          this.el.screenIdleSplash.style.display = 'none';
+          this.el.screenInput.style.display = 'flex';
+        }
+      }
+
+      // Update LCD Status Indicators
+      if (this.el.indAngle) {
+        this.el.indAngle.innerText = this.angleUnit === 'DEG' ? 'D' : (this.angleUnit === 'RAD' ? 'R' : 'G');
+      }
+      if (this.el.indMath) {
+        this.el.indMath.innerText = this.isMathIMode() ? 'Math' : 'Line';
+      }
+      if (this.el.indShift) {
+        this.el.indShift.classList.toggle('active', this.isShift);
+      }
+      if (this.el.indAlpha) {
+        this.el.indAlpha.classList.toggle('active', this.isAlpha);
+      }
+      if (this.el.indMem) {
+        this.el.indMem.classList.toggle('active', (typeof this.memM === 'number' && this.memM !== 0));
+      }
+
       if (this.isMathIMode()) {
         if (this.ast.isEmpty()) {
           if (this.rawExpr) {
             this.el.screenInput.innerHTML = `<span class="math-token">${this.rawExpr}</span><span class="casio-cursor"></span>`;
           } else {
-            this.el.screenInput.innerHTML = '<span class="screen-input-placeholder">Nhập biểu thức: x² - 3x + 1 = 0, log(100) - √2...</span> <span class="casio-cursor"></span>';
+            this.el.screenInput.innerHTML = '<span class="casio-cursor"></span>';
           }
         } else {
           this.el.screenInput.innerHTML = this.ast.toHTML(true);
@@ -2254,7 +2353,7 @@
         if (this.rawExpr) {
           this.el.screenInput.innerText = this.rawExpr;
         } else {
-          this.el.screenInput.innerHTML = '<span class="screen-input-placeholder">Nhập biểu thức 1 dòng...</span> <span class="casio-cursor"></span>';
+          this.el.screenInput.innerHTML = '<span class="casio-cursor"></span>';
         }
       }
 
